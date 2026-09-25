@@ -1,112 +1,70 @@
 "use client";
-
-import {
-    createContext,
-    useContext,
-    useState,
-    type ReactNode,
-} from "react";
-
-import type { Workout, Tab } from "@/lib/types";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import toast from "react-hot-toast";
+import type { Tab, Workout } from "@/lib/types";
 
-const PlanContext = createContext<any>(null);
-
-const PlanProvider = ({ children }: { children: ReactNode }) => {
-
-    const [plan, setPlan] = useState<Workout[]>([]);
-    const [saved, setSaved] = useState<Workout[]>([]);
-    const [tab, setTab] = useState<Tab>("plan");
-
-    const addToPlan = (workout: Workout) => {
-        if (plan.some((item) => item.id === workout.id)) {
-            toast("❌ Already in today's plan");
-            return;
-        }
-
-        if (plan.length >= 5) {
-            toast.error("Plan is full");
-            return;
-        }
-
-        setPlan([
-            ...plan,
-            {
-                ...workout,
-                done: false,
-            },
-        ]);
-
-        toast.success("Workout added");
-    };
-
-    const saveForLater = (workout: Workout) => {
-        if (saved.some((item) => item.id === workout.id)) {
-            toast("❌ Already saved");
-            return;
-        }
-
-        setSaved([...saved, workout]);
-
-        toast.success("Saved for later");
-    };
-
-    const removeItem = (list: Tab, id: Workout["id"]) => {
-
-        if (list === "plan") {
-            setPlan(
-                plan.filter((item) => item.id !== id)
-            );
-        } else {
-            setSaved(
-                saved.filter((item) => item.id !== id)
-            );
-        }
-
-        toast.success("Workout removed");
-    };
-
-    const markDone = (id: Workout["id"]) => {
-        setPlan(
-            plan.map((item) =>
-                item.id === id
-                    ? { ...item, done: true }
-                    : item
-            )
-        );
-
-        toast.success("Workout completed");
-    };
-
-    return (
-        <PlanContext.Provider
-            value={{
-                plan,
-                saved,
-                addToPlan,
-                saveForLater,
-                removeItem,
-                markDone,
-                tab,
-                setTab,
-                isPlanFull: plan.length >= 5,
-            }}
-        >
-            {children}
-        </PlanContext.Provider>
-    );
+type PlanContextValue = {
+  plan: Workout[];
+  saved: Workout[];
+  addToPlan: (w: Workout) => void;
+  saveForLater: (w: Workout) => void;
+  removeItem: (list: Tab, id: Workout["id"]) => void;
+  markDone: (id: Workout["id"]) => void;
+  isPlanFull: boolean;
+  hydrated: boolean;
+  tab: Tab;
+  setTab: (t: Tab) => void;
 };
 
-export const usePlan = () => {
-    const context = useContext(PlanContext);
+const PlanContext = createContext<PlanContextValue | null>(null);
+const MAX_PLAN = 5;
 
-    if (!context) {
-        throw new Error(
-            "usePlan must be used inside PlanProvider"
-        );
-    }
+export function PlanProvider({ children }: { children: ReactNode }) {
+  const [plan, setPlan] = useState<Workout[]>([]);
+  const [saved, setSaved] = useState<Workout[]>([]);
+  const [hydrated, setHydrated] = useState(false);
+  const [tab, setTab] = useState<Tab>("plan");
 
-    return context;
-};
+  useEffect(() => {
+    // Intentional: this only flips a one-time "mounted" flag so the UI can
+    // show a brief loader before the first client render, it does not sync
+    // with any external state.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setHydrated(true);
+  }, []);
 
-export default PlanProvider;
+  const addToPlan = (w: Workout) => {
+    if (plan.some((p) => p.id === w.id)) return toast("Already in today's plan");
+    if (plan.length >= MAX_PLAN) return toast.error("Plan is full. Finish a lift first.");
+    setPlan([...plan, { ...w, done: false }]);
+    toast.success("Added to today's plan");
+  };
+  const saveForLater = (w: Workout) => {
+    if (saved.some((s) => s.id === w.id)) return toast("Already saved");
+    setSaved([...saved, w]);
+    toast.success("Saved for later");
+  };
+  const removeItem = (list: Tab, id: Workout["id"]) => {
+    if (list === "plan") setPlan((prev) => prev.filter((x) => x.id !== id));
+    else setSaved((prev) => prev.filter((x) => x.id !== id));
+    toast.success("Workout removed");
+  };
+  const markDone = (id: Workout["id"]) => {
+    setPlan((prev) => prev.map((p) => (p.id === id ? { ...p, done: true } : p)));
+    toast.success("Marked as done");
+  };
+
+  return (
+    <PlanContext.Provider
+      value={{ plan, saved, addToPlan, saveForLater, removeItem, markDone, isPlanFull: plan.length >= MAX_PLAN, hydrated, tab, setTab }}
+    >
+      {children}
+    </PlanContext.Provider>
+  );
+}
+
+export function usePlan(): PlanContextValue {
+  const ctx = useContext(PlanContext);
+  if (!ctx) throw new Error("usePlan must be used inside <PlanProvider>");
+  return ctx;
+}

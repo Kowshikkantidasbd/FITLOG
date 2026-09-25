@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <header className="relative z-30 border-b border-base-300 bg-base-100">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3">
-        <Link href="/" aria-label="FitLog home" className="flex gap-0.5 font-bold "><Logo /></Link>
+        <Link href="/" aria-label="FitLog home"><Logo /></Link>
         <div className="flex gap-1">
           {link("/", "Workout", current === "/", () => setPending("/"))}
           {link("/my-plan", "My Plan", current === "/my-plan", () => { setTab("plan"); setPending("/my-plan"); })}
