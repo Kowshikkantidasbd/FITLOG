@@ -149,6 +149,4 @@ Design based on the FitLog Figma spec. Workout data served from a custom FitLog 
 
 <<<<<<< HEAD
 © 2026 FitLog — Workout Library. Train hard, log honest.
-=======
-© 2026 FitLog — Workout Library. Train hard, log honest.
->>>>>>> 84d8219 (navber fiex)
+
