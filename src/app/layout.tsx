@@ -19,11 +19,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" data-theme="fitlog" className={`${oswald.variable} ${inter.variable}`}>
       <body className="flex min-h-screen flex-col font-sans antialiased">
+        
         <PlanProvider>
+        
           <Navbar />
           <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">{children}</main>
+        
           <Footer />
+        
           <Toasts />
+        
         </PlanProvider>
       </body>
     </html>
