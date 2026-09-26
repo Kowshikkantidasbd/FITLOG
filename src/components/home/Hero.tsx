@@ -16,7 +16,7 @@ export default function Hero() {
         </a>
       </div>
 
-      <img src="/banner.png" alt="Muscle anatomy on a preacher curl machine" className="mx-auto max-h-80 w-full object-contain lg:max-h-96" />
+      <img src="/banner.png" alt="Muscle anatomy on a preacher curl machine" className="mx-auto max-h-[28rem] w-full object-contain lg:max-h-[34rem]" />
     </section>
   );
 }
