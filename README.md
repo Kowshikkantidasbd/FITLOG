@@ -9,9 +9,9 @@ Pick a lift, lock it into today's plan, and watch the week's work add up.
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![daisyUI](https://img.shields.io/badge/daisyUI-5-1AD1A5?logo=daisyui&logoColor=white)](https://daisyui.com/)
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel&logoColor=white)](https://fitlog-kowshik-three.vercel.app/)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel&logoColor=white)](https://fitlog-kowshik-ten.vercel.app/)
 
-🔗 **[Live Demo](https://fitlog-kowshik-three.vercel.app/)** · 💻 **[GitHub Repo](https://github.com/Kowshikkantidasbd/FITLOG)**
+🔗 **[Live Demo](https://fitlog-kowshik-ten.vercel.app/)** · 💻 **[GitHub Repo](https://github.com/Kowshikkantidasbd/FITLOG)**
 
 </div>
 
@@ -19,7 +19,7 @@ Pick a lift, lock it into today's plan, and watch the week's work add up.
 
 ## 🌐 Live Link
 
-👉 **[https://fitlog-kowshik-three.vercel.app/](https://fitlog-kowshik-three.vercel.app/)**
+👉 **[https://fitlog-kowshik-ten.vercel.app/](https://fitlog-kowshik-ten.vercel.app/)**
 
 ## 📑 Table of Contents
 
